@@ -1,26 +1,36 @@
 {
   "name": "Octane",
-  "version": "1.0.0",
   "description": "Rocket League Garage trading automation bot",
-  "main": "bot.js",
+  "version": "1.0.0",
   "author": "Jamie Straw <me@jamiestraw.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/jamiestraw/octane#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jamiestraw/octane.git"
-  },
   "bugs": {
     "url": "https://github.com/jamiestraw/octane/issues"
-  },
-  "scripts": {
-    "start": "node bot.js",
-    "test": "standard"
   },
   "dependencies": {
     "chalk": "^2.1.0",
     "moment": "^2.18.1",
     "ora": "^1.3.0",
     "puppeteer": "^0.10.2"
+  },
+  "homepage": "https://github.com/jamiestraw/octane#readme",
+  "keywords": [
+    "bot",
+    "node",
+    "nodejs",
+    "puppeteer",
+    "rocket-league",
+    "rocket-league-garage",
+    "scraping",
+    "trading"
+  ],
+  "license": "MIT",
+  "main": "bot.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamiestraw/octane.git"
+  },
+  "scripts": {
+    "start": "node bot.js",
+    "test": "standard"
   }
 }
