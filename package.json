@@ -30,7 +30,9 @@
     "url": "git+https://github.com/jamiestraw/octane.git"
   },
   "scripts": {
-    "start": "node bot.js",
+    "bulk": "node bot.js bulk",
+    "drip": "node bot.js drip",
+    "start": "node bot.js bulk",
     "test": "standard"
   }
 }
