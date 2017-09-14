@@ -26,6 +26,7 @@ async function boot () {
   const page = await browser.newPage()
   page.setViewport({ width: 1920, height: 1080 })
   spinner.stopAndPersist({ symbol: chalk.blue('⚡'), text: `Booted ${pjson.name} v${pjson.version}` })
+  ora(`${pjson.name} is running in ${chalk.blue(mode)} mode`).info()
   return page
 }
 
@@ -93,7 +94,13 @@ async function updateTrades ([page, tradeUrls]) {
   for (let [index, tradeUrl] of tradeUrls.entries()) {
     const humanIndex = index + 1
     const start = moment()
-    const spinner = ora(`Bumping trade ${humanIndex}/${tradeUrls.length}`).start()
+
+    let spinner
+    if (mode === 'drip') {
+      spinner = ora(`Bumping oldest active trade`).start()
+    } else {
+      spinner = ora(`Bumping trade ${humanIndex}/${tradeUrls.length}`).start()
+    }
 
     try {
       // Navigate to trade
@@ -108,10 +115,20 @@ async function updateTrades ([page, tradeUrls]) {
       await page.waitForNavigation({ timeout: 120000 })
 
       const secondsElapsed = moment().diff(start, 'seconds')
-      spinner.succeed(`Bumped trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
+      if (mode === 'drip') {
+        spinner.succeed(`Bumped oldest active trade ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
+      } else {
+        spinner.succeed(`Bumped trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
+      }
     } catch (error) {
       // @TODO: Add error logging to file
-      spinner.fail(`Failed to bump trade ${humanIndex}/${tradeUrls.length}`)
+
+      const secondsElapsed = moment().diff(start, 'seconds')
+      if (mode === 'drip') {
+        spinner.fail(`Failed to bump oldest active trade ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
+      } else {
+        spinner.fail(`Failed to bump trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
+      }
     }
   }
 
