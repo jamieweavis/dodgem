@@ -1,11 +1,19 @@
 'use strict'
 
 const ora = require('ora')
+const mode = process.argv[2]
+const modes = ['bulk', 'drip']
 const pjson = require('./package.json')
 const chalk = require('chalk')
 const moment = require('moment')
 const puppeteer = require('puppeteer')
 const credentials = require('./credentials.json')
+
+if (!modes.includes(mode)) {
+  ora(`Invalid mode: \`${mode}\``).fail()
+  ora(`See ${chalk.blue('README.md')} for mode information.`).info()
+  process.exit()
+}
 
 /**
  * Initializes the headless browser and page
@@ -59,13 +67,17 @@ async function scrapeTrades (page) {
   await page.goto(`https://rocket-league.com/trades/${credentials.username}`, { timeout: 120000 })
 
   // Scrape trades
-  const tradeUrls = await page.evaluate(() => {
+  let tradeUrls = await page.evaluate(() => {
     const anchors = Array.from(document.querySelectorAll('.rlg-trade-display-header > a'))
     return anchors.map(anchor => anchor.href)
   })
   spinner.succeed(`Found ${chalk.blue(tradeUrls.length)} active trade${tradeUrls.length > 1 ? 's' : ''}`)
 
   // @TODO: Filter out trades that are not editable due to 15 minute cool-off period
+
+  if (mode === 'drip') {
+    tradeUrls = [tradeUrls[tradeUrls.length - 1]]
+  }
 
   return [page, tradeUrls]
 }
@@ -107,15 +119,14 @@ async function updateTrades ([page, tradeUrls]) {
 }
 
 /**
- * Schedule updateTrades to be executed again after 16 minutes
- *
- * 16 minutes to avoid the 15 minute cool-off period after updating a trade.
+ * @TODO
  *
  * @param {Page} page
  */
 function scheduleUpdateTrades (page) {
-  const nextRunTs = moment().add(16, 'minutes').format('HH:mm:ss')
-  const timeout = 1000 * 60 * 16
+  const minutes = (mode === 'drip' ? 3 : 16)
+  const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
+  const timeout = 1000 * 60 * minutes
 
   ora().stopAndPersist({
     symbol: chalk.blue('⚡'),
