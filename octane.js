@@ -1,19 +1,20 @@
+#!/usr/bin/env node
 'use strict'
 
 const ora = require('ora')
-const mode = process.argv[2]
-const modes = ['bulk', 'drip']
-const pjson = require('./package.json')
 const chalk = require('chalk')
 const moment = require('moment')
+const octane = require('commander')
 const puppeteer = require('puppeteer')
+
+const pjson = require('./package.json')
 const credentials = require('./credentials.json')
 
-if (!modes.includes(mode)) {
-  ora(`Invalid mode: \`${mode}\``).fail()
-  ora(`See ${chalk.blue('README.md')} for mode information.`).info()
-  process.exit()
-}
+octane
+  .version(pjson.version)
+  .option('-m, --mode [mode]', `set the running mode [bulk|drip]`, /^(bulk|drip)$/i, 'bulk')
+  .option('-i, --interval [minutes]', `how often the program will loop`, /^(\d*)$/i, 15)
+  .parse(process.argv)
 
 /**
  * Initializes the headless browser and page
@@ -21,20 +22,30 @@ if (!modes.includes(mode)) {
  * @returns {Promise.<Page>}
  */
 async function boot () {
-  let ascii = `
+  console.log(chalk.magenta(`
    ____       __                 
   / __ \\_____/ /_____ _____  ___ 
  / / / / ___/ __/ __ '/ __ \\/ _ \\
 / /_/ / /__/ /_/ /_/ / / / /  __/
 \\____/\\___/\\__/\\__,_/_/ /_/\\___/  ${chalk.green(`v${pjson.version}`)}
 
-  `
-  console.log(chalk.magenta(ascii))
+  `))
 
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
-  page.setViewport({ width: 1920, height: 1080 })
-  ora(`${pjson.name} is running in ${chalk.blue(mode)} mode`).info()
+
+  ora(`${pjson.name} is running in ${chalk.blue(octane.mode)} mode with an interval of ` +
+    `${chalk.blue(octane.interval)} minutes`).info()
+  if (octane.mode === 'bulk' && octane.interval < 15) {
+    ora(`Running in ${chalk.blue('bulk')} mode with an interval less than 15 minutes is not possible, ` +
+      'please try again - this is due to the 15 minute cool-off period when updating trades on Rocket League Garage.').fail()
+    process.exit(1)
+  }
+  if (octane.mode === 'drip') {
+    ora(`When running in ${chalk.blue('drip')} mode it is recommended to have a trade to interval ratio ` +
+      'that will exceed the 15 minute cool-off period on Rocket League Garage to avoid failures').warn()
+  }
+
   return page
 }
 
@@ -80,14 +91,11 @@ async function scrapeTrades (page) {
     const anchors = Array.from(document.querySelectorAll('.rlg-trade-display-header > a'))
     return anchors.map(anchor => anchor.href)
   })
-  spinner.succeed(`Found ${chalk.blue(tradeUrls.length)} active trade${tradeUrls.length > 1 ? 's' : ''}`)
+  spinner.succeed(`Found ${chalk.blue(tradeUrls.length)} active trade${tradeUrls.length === 1 ? '' : 's'}`)
 
   // @TODO: Filter out trades that are not editable due to 15 minute cool-off period
 
-  if (mode === 'drip') {
-    tradeUrls = [tradeUrls[tradeUrls.length - 1]]
-  }
-
+  if (octane.mode === 'drip') tradeUrls = [tradeUrls[tradeUrls.length - 1]]
   return [page, tradeUrls]
 }
 
@@ -102,13 +110,10 @@ async function updateTrades ([page, tradeUrls]) {
   for (let [index, tradeUrl] of tradeUrls.entries()) {
     const humanIndex = index + 1
     const start = moment()
-
-    let spinner
-    if (mode === 'drip') {
-      spinner = ora(`Bumping oldest active trade`).start()
-    } else {
-      spinner = ora(`Bumping trade ${humanIndex}/${tradeUrls.length}`).start()
-    }
+    const spinner = ora(octane.mode === 'drip'
+      ? `Bumping oldest active trade`
+      : `Bumping trade ${humanIndex}/${tradeUrls.length}`
+    ).start()
 
     try {
       // Navigate to trade
@@ -123,20 +128,18 @@ async function updateTrades ([page, tradeUrls]) {
       await page.waitForNavigation({ timeout: 120000 })
 
       const secondsElapsed = moment().diff(start, 'seconds')
-      if (mode === 'drip') {
-        spinner.succeed(`Bumped oldest active trade ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
-      } else {
-        spinner.succeed(`Bumped trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
-      }
+      spinner.succeed(octane.mode === 'drip'
+        ? `Bumped oldest active trade ${chalk.grey(`(${secondsElapsed} seconds)`)}`
+        : `Bumped trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`
+      )
     } catch (error) {
       // @TODO: Add error logging to file
 
       const secondsElapsed = moment().diff(start, 'seconds')
-      if (mode === 'drip') {
-        spinner.fail(`Failed to bump oldest active trade ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
-      } else {
-        spinner.fail(`Failed to bump trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`)
-      }
+      spinner.fail(octane.mode === 'drip'
+        ? `Failed to bump oldest active trade ${chalk.grey(`(${secondsElapsed} seconds)`)}`
+        : `Failed to bump trade ${humanIndex}/${tradeUrls.length} ${chalk.grey(`(${secondsElapsed} seconds)`)}`
+      )
     }
   }
 
@@ -149,9 +152,8 @@ async function updateTrades ([page, tradeUrls]) {
  * @param {Page} page
  */
 function scheduleUpdateTrades (page) {
-  const minutes = (mode === 'drip' ? 3 : 16)
+  const minutes = octane.interval
   const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
-  const timeout = 1000 * 60 * minutes
 
   ora(`${pjson.name} will run again at: ${chalk.green(nextRunTs)}`).info()
 
@@ -159,10 +161,9 @@ function scheduleUpdateTrades (page) {
     scrapeTrades(page)
       .then(updateTrades)
       .then(scheduleUpdateTrades)
-  }, timeout)
+  }, 1000 * 60 * minutes)
 }
 
-// It's party time!
 boot()
   .then(login)
   .then(scrapeTrades)

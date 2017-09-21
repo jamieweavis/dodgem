@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "commander": "^2.11.0",
     "moment": "^2.18.1",
     "ora": "^1.3.0",
     "puppeteer": "^0.10.2"
@@ -24,15 +25,12 @@
     "trading"
   ],
   "license": "MIT",
-  "main": "bot.js",
+  "main": "octane.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jamiestraw/octane.git"
   },
   "scripts": {
-    "bulk": "node bot.js bulk",
-    "drip": "node bot.js drip",
-    "start": "node bot.js bulk",
     "test": "standard"
   }
 }
