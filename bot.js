@@ -21,11 +21,19 @@ if (!modes.includes(mode)) {
  * @returns {Promise.<Page>}
  */
 async function boot () {
-  const spinner = ora(`Booting ${pjson.name} v${pjson.version}`).start()
+  let ascii = `
+   ____       __                 
+  / __ \\_____/ /_____ _____  ___ 
+ / / / / ___/ __/ __ '/ __ \\/ _ \\
+/ /_/ / /__/ /_/ /_/ / / / /  __/
+\\____/\\___/\\__/\\__,_/_/ /_/\\___/  ${chalk.green(`v${pjson.version}`)}
+
+  `
+  console.log(chalk.magenta(ascii))
+
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   page.setViewport({ width: 1920, height: 1080 })
-  spinner.stopAndPersist({ symbol: chalk.blue('⚡'), text: `Booted ${pjson.name} v${pjson.version}` })
   ora(`${pjson.name} is running in ${chalk.blue(mode)} mode`).info()
   return page
 }
@@ -145,10 +153,7 @@ function scheduleUpdateTrades (page) {
   const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
   const timeout = 1000 * 60 * minutes
 
-  ora().stopAndPersist({
-    symbol: chalk.blue('⚡'),
-    text: `${pjson.name} will run again at: ${chalk.green(nextRunTs)}`
-  })
+  ora(`${pjson.name} will run again at: ${chalk.green(nextRunTs)}`).info()
 
   setTimeout(() => {
     scrapeTrades(page)
