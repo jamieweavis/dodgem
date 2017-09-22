@@ -10,4 +10,5 @@
 - [ ] Filter "un-bumpable" trades when scraping trades in `scrapeTrades()`
 - [ ] Remove nasty `timeout` hack in puppeteer navigation requests (for some reason `pageload` takes over 1 minute to fire sometimes)
 - [ ] Add error handling & logging
+- [ ] Publish on NPM
 - [ ] Create nice `README.md`
