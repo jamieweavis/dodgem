@@ -120,11 +120,11 @@ async function updateTrades ([page, tradeUrls]) {
       await page.goto(tradeUrl, { timeout: 120000 })
 
       // Edit trade
-      await page.click('body > main > div > div > div > div:nth-child(2) > a:nth-child(1)') // @TODO: Tidy this selector
+      await page.click("[href^='/trade/edit']")
       await page.waitForNavigation({ timeout: 120000 })
 
       // Save
-      await page.click('input.rlg-btn-primary')
+      await page.click('#rlg-addTradeForm input[type=submit]')
       await page.waitForNavigation({ timeout: 120000 })
 
       const secondsElapsed = moment().diff(start, 'seconds')
