@@ -1,5 +1,5 @@
 # Dodgem
 
-> 🎪 Rocket League Garage trade bumping bot
+> 🎪 Rocket League Garage trade bumping automation CLI bot
 
 ###### README coming soon™

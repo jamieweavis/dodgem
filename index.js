@@ -210,7 +210,7 @@ async function setLogin () {
 
 dodgem
   .version(pjson.version)
-  .help(`🚀  ${capitalize(pjson.name)} - ${pjson.description}`)
+  .help(`🎪  ${capitalize(pjson.name)} - ${pjson.description}`)
 
   // List Categories
   .command('bump', 'Begin the bumping process')
