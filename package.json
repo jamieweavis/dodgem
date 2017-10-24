@@ -19,6 +19,9 @@
     "prompt": "^1.0.0",
     "puppeteer": "^0.10.2"
   },
+  "engines": {
+    "node": ">=7.1.0"
+  },
   "homepage": "https://github.com/jamiestraw/dodgem#readme",
   "keywords": [
     "bot",
