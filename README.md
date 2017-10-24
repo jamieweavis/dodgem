@@ -40,8 +40,8 @@ Coming soon™
 
   - `<target>` - Which trades to bump
       - `all` - Bumps all trades - Most effective when you have a variety of different trades
-      - `oldest` - Bumps the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market.
-    - `<interval>` - How many minutes to wait before bumping again.
+      - `oldest` - Bumps only the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market
+  - `<interval>` - How many minutes to wait before bumping again
 
 ###### Examples:
 
