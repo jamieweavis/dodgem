@@ -39,8 +39,8 @@ Prompts you for your email address, username & password for Rocket League Garage
 Begins bumping the `<target>` every `<interval>`.
 
 - `<target>` - Which trades to bump
- - `all` - Bumps all trades - most effective when you have a variety of different trades listed
- - `oldest` - most effective when you have lots of duplicate trades and you want to saturate the market.
+  - `all` - Bumps all trades - most effective when you have a variety of different trades listed
+  - `oldest` - most effective when you have lots of duplicate trades and you want to saturate the market.
 - `<interval>` - How many minutes to wait before bumping again.
 
 Examples:
