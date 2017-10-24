@@ -13,13 +13,13 @@ const Preferences = require('preferences')
 
 // Files
 const pjson = require('./package.json')
-const credentials = require('./credentials.json')
+const regex = require('./regex')
 
-let prefs = new Preferences('com.your.app.identifier', {
-  username: null,
-  emailAddress: null,
-  password: null
-})
+// Convenience
+const projectName = capitalize(pjson.name)
+
+// Preferences
+let prefs = new Preferences('com.jamiestraw.dodgem')
 
 /**
  * Initializes the headless browser and page
@@ -41,7 +41,8 @@ async function boot (args, opts) {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
 
-  ora(`${capitalize(pjson.name)} is running in ${chalk.blue(args.mode)} mode with a ${chalk.blue(args.interval)} minute interval`).info()
+  const target = args.target === 'oldest' ? 'the oldest trade' : 'all trades'
+  ora(`${projectName} will bump ${chalk.blue(target)} every ${chalk.blue(args.interval)} minutes`).info()
 
   return [page, args, opts]
 }
@@ -55,22 +56,22 @@ async function boot (args, opts) {
  * @returns {Promise.<Array>}
  */
 async function login ([page, args, opts]) {
-  const spinner = ora(`Logging in as: ${chalk.blue(credentials.emailAddress)}`).start()
+  const spinner = ora(`Logging in as: ${chalk.blue(prefs.emailAddress)}`).start()
   await page.goto('https://rocket-league.com/login')
 
-  // Username
+  // Email Address
   await page.focus('.rlg-form .rlg-input[type="email"]')
-  await page.type(credentials.emailAddress)
+  await page.type(prefs.emailAddress)
 
   // Password
   await page.focus('.rlg-form .rlg-input[type="password"]')
-  await page.type(credentials.password)
+  await page.type(prefs.password)
 
   // Submit
   await page.click('.rlg-form .rlg-btn-primary[type="submit"]')
   await page.waitForNavigation()
 
-  spinner.succeed(`Logged in as: ${chalk.blue(credentials.emailAddress)}`)
+  spinner.succeed(`Logged in as: ${chalk.blue(prefs.emailAddress)}`)
   return [page, args, opts]
 }
 
@@ -85,7 +86,7 @@ async function login ([page, args, opts]) {
 async function scrapeTrades ([page, args, opts]) {
   // Navigate to trades
   const spinner = ora('Finding active trades').start()
-  await page.goto(`https://rocket-league.com/trades/${credentials.username}`)
+  await page.goto(`https://rocket-league.com/trades/${prefs.username}`)  // @TODO: Eventually remove username
 
   // Scrape trades
   let tradeUrls = await page.evaluate(() => {
@@ -96,7 +97,7 @@ async function scrapeTrades ([page, args, opts]) {
 
   // @TODO: Filter out trades that are not editable due to 15 minute cool-off period
 
-  if (args.mode === 'last') tradeUrls = [tradeUrls[tradeUrls.length - 1]]
+  if (args.target === 'oldest') tradeUrls = [tradeUrls[tradeUrls.length - 1]]
   return [page, args, opts, tradeUrls]
 }
 
@@ -113,7 +114,7 @@ async function updateTrades ([page, args, opts, tradeUrls]) {
   for (let [index, tradeUrl] of tradeUrls.entries()) {
     const humanIndex = index + 1
     const start = moment()
-    const spinner = ora(args.mode === 'last'
+    const spinner = ora(args.target === 'oldest'
       ? 'Bumping oldest active trade'
       : `Bumping trade ${humanIndex}/${tradeUrls.length}`
     ).start()
@@ -131,7 +132,7 @@ async function updateTrades ([page, args, opts, tradeUrls]) {
       await page.waitForNavigation()
 
       const secondsElapsed = moment().diff(start, 'seconds')
-      spinner.succeed(args.mode === 'last'
+      spinner.succeed(args.target === 'oldest'
         ? `Bumped oldest active trade ${chalk.dim(`(${secondsElapsed} seconds)`)}`
         : `Bumped trade ${humanIndex}/${tradeUrls.length} ${chalk.dim(`(${secondsElapsed} seconds)`)}`
       )
@@ -139,7 +140,7 @@ async function updateTrades ([page, args, opts, tradeUrls]) {
       // @TODO: Add error logging to file
 
       const secondsElapsed = moment().diff(start, 'seconds')
-      spinner.fail(args.mode === 'last'
+      spinner.fail(args.target === 'oldest'
         ? `Failed to bump oldest active trade ${chalk.dim(`(${secondsElapsed} seconds)`)}`
         : `Failed to bump trade ${humanIndex}/${tradeUrls.length} ${chalk.dim(`(${secondsElapsed} seconds)`)}`
       )
@@ -160,7 +161,7 @@ function scheduleUpdateTrades ([page, args, opts]) {
   const minutes = args.interval
   const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
 
-  ora(`${pjson.name} will run again at: ${chalk.green(nextRunTs)}`).info()
+  ora(`${projectName} will run again at: ${chalk.green(nextRunTs)}`).info()
 
   setTimeout(() => {
     scrapeTrades([page, args, opts])
@@ -170,9 +171,12 @@ function scheduleUpdateTrades ([page, args, opts]) {
 }
 
 /**
- * @TODO
+ * @TODO: Doc-block
  */
 async function setLogin () {
+  console.log('')
+  ora('Please enter login credentials for Rocket League Garage').info()
+
   prompt.message = 'Rocket League Garage'
   prompt.delimiter = ' > '
   prompt.start()
@@ -180,13 +184,13 @@ async function setLogin () {
     properties: {
       username: {
         description: 'Username',
-        pattern: /^\S*$/,
-        message: 'Please enter a username',
+        pattern: regex.nonWhiteSpace,
+        message: 'Please enter a valid username',
         required: true
       },
       emailAddress: {
         description: 'Email Address',
-        pattern: /^\S*$/,
+        pattern: regex.emailAddress,
         message: 'Please enter a valid email address',
         required: true
       },
@@ -194,28 +198,32 @@ async function setLogin () {
         description: 'Password',
         hidden: true,
         replace: '*',
-        pattern: /^\S*$/,
-        message: 'Please enter a password',
+        pattern: regex.nonWhiteSpace,
+        message: 'Please enter a valid password',
         required: true
       }
     }
-  }, (error, details) => {
-    if (error) throw error
-    console.log('Command-line input received:')
-    console.log('  name: ' + details.username)
-    console.log('  email address: ' + details.emailAddress)
-    console.log('  password: ' + details.password)
+  }, (error, credentials) => {
+    if (error) return console.log(chalk.red('\n\nLogin aborted'))
+
+    // @TODO: Verify that credentials are valid
+    const spinner = ora(`Saving credentials for: ${chalk.blue(credentials.emailAddress)}`).start()
+    spinner.succeed(`Credentials verified and saved for: ${chalk.blue(credentials.emailAddress)}`)
+
+    prefs.username = credentials.username
+    prefs.emailAddress = credentials.emailAddress
+    prefs.password = credentials.password
   })
 }
 
 dodgem
   .version(pjson.version)
-  .help(`🎪  ${capitalize(pjson.name)} - ${pjson.description} - v${pjson.version}`)
+  .help(`🎪  ${projectName} - ${pjson.description} - v${pjson.version}`)
 
-  // List Categories
-  .command('bump', 'Begin the bumping process')
-  .argument('[mode]', 'The mode in which to run - bulk or drip', ['all', 'last'], 'all')
-  .argument('[interval]', 'How often to run', /^\d*$/, 15)
+  // Bump
+  .command('bump', 'Begin bumping active trades')
+  .argument('<target>', `Which trades to bump - ${chalk.blue('all')} or ${chalk.blue('oldest')}`, ['all', 'oldest'], 'all')
+  .argument('<interval>', 'How many minutes to wait before bumping again', /^\d*$/, 15)
   .action((args, opts) => {
     boot(args, opts)
       .then(login)
@@ -224,8 +232,8 @@ dodgem
       .then(scheduleUpdateTrades)
   })
 
-  // Set login details
-  .command('login', 'Login')
+  // Login
+  .command('login', 'Set login credentials for Rocket League Garage')
   .action(setLogin)
 
 dodgem.parse(process.argv)
