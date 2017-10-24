@@ -61,4 +61,4 @@ This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) fo
 
 The author and any contributors associated with this project are not resposible for the consequences that may occur from the use of this tool.
 
-Users of this tool do so entirely at their own risk - abusing this tool could get you banned from Rocket League Garage.
+Users of this tool do so entirely at their own risk - abusing this tool could get you permanently banned from Rocket League Garage.
