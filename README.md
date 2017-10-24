@@ -22,35 +22,43 @@ $ npm install --global dodgem
 
 Coming soon™
 
-## 🚀 Usage
+## ⚡ Commands
 
-### `dodgem help`
+#### `dodgem help`
 
-Outputs detailed usage and help information.
+- Outputs detailed usage and help information.
 
-### ``dodgem login``
+#### ``dodgem login``
 
-Prompts you for your email address, username & password for Rocket League Garage. You can run this command again to update your login details.
+- Prompts you for your email address, username & password for Rocket League Garage. You can run this command again to update your login details.
 
-*Note: Your login details are encrypted and stored locally*
+  *Note: Your login details are encrypted and stored locally*
 
-### ``dodgem bump <target> <interval>``
+#### ``dodgem bump <target> <interval>``
 
-Begins bumping the `<target>` every `<interval>`.
+- Begins bumping the `<target>` every `<interval>`.
 
-- `<target>` - Which trades to bump
-  - `all` - Bumps all trades - most effective when you have a variety of different trades listed
-  - `oldest` - most effective when you have lots of duplicate trades and you want to saturate the market.
-- `<interval>` - How many minutes to wait before bumping again.
+  - `<target>` - Which trades to bump
+      - `all` - Bumps all trades - Most effective when you have a variety of different trades
+      - `oldest` - Bumps the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market.
+    - `<interval>` - How many minutes to wait before bumping again.
 
-Examples:
+###### Examples:
 
 ```sh
+# Bumps all trades every 15 minutes
 $ dodgem bump all 15
 
+# Bumps the oldest trade every 3 minutes
 $ dodgem bump oldest 3
 ```
 
 ## 📄 License
 
 This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) for details.
+
+## ⚠️ Disclaimer
+
+The author and any contributors associated with this project are not resposible for the consequences that may occur from the use of this tool.
+
+Users of this tool do so entirely at their own risk - abusing this tool could get you banned from Rocket League Garage.
