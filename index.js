@@ -87,6 +87,7 @@ async function scrapeTrades ([page, args, opts]) {
   const spinner = ora('Finding active trades').start()
 
   // Navigate to active trades
+  await page.goto('https://rocket-league.com/trading')
   await page.hover('.rlg-header-main-welcome-user')
   await page.click("[href^='/trades']")
   await page.waitForNavigation()
