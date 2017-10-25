@@ -22,7 +22,7 @@ const projectName = capitalize(pjson.name)
 let prefs = new Preferences('com.jamiestraw.dodgem')
 
 /**
- * Initializes the headless browser and page
+ * Initialize puppeteer & display splash screen
  *
  * @param {Object} args
  * @param {Object} opts
@@ -48,7 +48,7 @@ async function boot (args, opts) {
 }
 
 /**
- * Logs in to RLG using stored credentials
+ * Log in to Rocket League Garage using stored account credentials
  *
  * @param {Page} page
  * @param {Object} args
@@ -76,7 +76,7 @@ async function login ([page, args, opts]) {
 }
 
 /**
- * Scrapes active trade listings
+ * Scrape active trades
  *
  * @param {Page} page
  * @param {Object} args
@@ -105,7 +105,7 @@ async function scrapeTrades ([page, args, opts]) {
 }
 
 /**
- * Loop through trade URLs and update each trade listing
+ * Bump active trades
  *
  * @param {Page} page
  * @param {Object} args
@@ -113,7 +113,7 @@ async function scrapeTrades ([page, args, opts]) {
  * @param {Object[]} tradeUrls
  * @returns {Promise.<Array>}
  */
-async function updateTrades ([page, args, opts, tradeUrls]) {
+async function bumpTrades ([page, args, opts, tradeUrls]) {
   for (let [index, tradeUrl] of tradeUrls.entries()) {
     const humanIndex = index + 1
     const start = moment()
@@ -154,13 +154,13 @@ async function updateTrades ([page, args, opts, tradeUrls]) {
 }
 
 /**
- * Schedule the next call to updateTrades
+ * Schedule next bump
  *
  * @param {Page} page
  * @param {Object} args
  * @param {Object} opts
  */
-function scheduleUpdateTrades ([page, args, opts]) {
+function scheduleBumpTrades ([page, args, opts]) {
   const minutes = args.interval
   const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
 
@@ -168,13 +168,13 @@ function scheduleUpdateTrades ([page, args, opts]) {
 
   setTimeout(() => {
     scrapeTrades([page, args, opts])
-      .then(updateTrades)
-      .then(scheduleUpdateTrades)
+      .then(bumpTrades)
+      .then(scheduleBumpTrades)
   }, 1000 * 60 * minutes)
 }
 
 /**
- * @TODO: Doc-block
+ * Prompt user for Rocket League Garage account credentials, verify & save
  */
 async function setLogin () {
   console.log('')
@@ -201,9 +201,8 @@ async function setLogin () {
       }
     }
   }, (error, credentials) => {
-    if (error) return console.log(chalk.red('\n\nLogin aborted'))
+    if (error) return console.log(chalk.red('\n\nLog in aborted'))
 
-    // @TODO: Verify that credentials are valid
     const spinner = ora(`Saving credentials for: ${chalk.blue(credentials.emailAddress)}`).start()
     spinner.succeed(`Credentials verified and saved for: ${chalk.blue(credentials.emailAddress)}`)
 
@@ -224,8 +223,9 @@ dodgem
     boot(args, opts)
       .then(login)
       .then(scrapeTrades)
-      .then(updateTrades)
-      .then(scheduleUpdateTrades)
+      .then(bumpTrades)
+      .then(scheduleBumpTrades)
+      .catch(error => { console.log(error.message) })
   })
 
   // Login
