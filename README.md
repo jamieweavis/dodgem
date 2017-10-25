@@ -30,7 +30,7 @@ Coming soon™
 
 #### ``dodgem login``
 
-- Prompts you for your email address, username & password for Rocket League Garage. You can run this command again to update your login details.
+- Prompts you for your email address & password for Rocket League Garage. You can run this command again to update your login details.
 
   *Note: Your login details are encrypted and stored locally*
 

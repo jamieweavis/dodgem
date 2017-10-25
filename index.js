@@ -84,11 +84,14 @@ async function login ([page, args, opts]) {
  * @returns {Promise.<Array>}
  */
 async function scrapeTrades ([page, args, opts]) {
-  // Navigate to trades
   const spinner = ora('Finding active trades').start()
-  await page.goto(`https://rocket-league.com/trades/${prefs.username}`)  // @TODO: Eventually remove username
 
-  // Scrape trades
+  // Navigate to active trades
+  await page.hover('.rlg-header-main-welcome-user')
+  await page.click("[href^='/trades']")
+  await page.waitForNavigation()
+
+  // Scrape trade URLs
   let tradeUrls = await page.evaluate(() => {
     const anchors = Array.from(document.querySelectorAll('.rlg-trade-display-header > a'))
     return anchors.map(anchor => anchor.href)
@@ -182,12 +185,6 @@ async function setLogin () {
   prompt.start()
   prompt.get({
     properties: {
-      username: {
-        description: 'Username',
-        pattern: regex.nonWhiteSpace,
-        message: 'Please enter a valid username',
-        required: true
-      },
       emailAddress: {
         description: 'Email Address',
         pattern: regex.emailAddress,
@@ -210,7 +207,6 @@ async function setLogin () {
     const spinner = ora(`Saving credentials for: ${chalk.blue(credentials.emailAddress)}`).start()
     spinner.succeed(`Credentials verified and saved for: ${chalk.blue(credentials.emailAddress)}`)
 
-    prefs.username = credentials.username
     prefs.emailAddress = credentials.emailAddress
     prefs.password = credentials.password
   })
