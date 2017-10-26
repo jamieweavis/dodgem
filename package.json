@@ -17,8 +17,7 @@
     "ora": "^1.3.0",
     "preferences": "^0.2.1",
     "prompt": "^1.0.0",
-    "puppeteer": "^0.10.2",
-    "tabtab": "^2.2.2"
+    "puppeteer": "^0.10.2"
   },
   "engines": {
     "node": ">=7.6.0"
@@ -41,8 +40,6 @@
     "url": "git+https://github.com/jamiestraw/dodgem.git"
   },
   "scripts": {
-    "test": "standard",
-    "install": "tabtab install",
-    "uninstall": "tabtab uninstall --auto"
+    "test": "standard"
   }
 }
