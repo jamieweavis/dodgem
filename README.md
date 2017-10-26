@@ -22,7 +22,7 @@ $ npm install --global dodgem
 
 Coming soon™
 
-## ⚡ Commands
+## 🚀 Commands
 
 #### `dodgem help`
 
@@ -52,6 +52,10 @@ $ dodgem bump all 15
 # Bumps the oldest trade every 3 minutes
 $ dodgem bump oldest 3
 ```
+
+## 🔗 Related
+
+[Prosper](https://github.com/jamiestraw/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
 
 ## 📄 License
 
