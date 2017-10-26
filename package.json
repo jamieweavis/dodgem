@@ -40,6 +40,8 @@
     "url": "git+https://github.com/jamiestraw/dodgem.git"
   },
   "scripts": {
-    "test": "standard"
+    "test": "standard",
+    "install": "tabtab install",
+    "uninstall": "tabtab uninstall --auto"
   }
 }
