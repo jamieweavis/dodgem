@@ -217,7 +217,7 @@ dodgem
   .help(`🎪  ${projectName} - ${pjson.description} - v${pjson.version}`)
 
   // Bump
-  .command('bump', 'Begin bumping active trades')
+  .command('bump', 'Start bumping the specified target every interval')
   .argument('<target>', `Which trades to bump - ${chalk.blue('all')} or ${chalk.blue('oldest')}`, ['all', 'oldest'], 'all')
   .argument('<interval>', 'How many minutes to wait before bumping again', /^\d*$/, 15)
   .action((args, opts) => {
@@ -226,7 +226,6 @@ dodgem
       .then(scrapeTrades)
       .then(bumpTrades)
       .then(scheduleBumpTrades)
-      .catch(error => { console.log(error.message) })
   })
 
   // Login

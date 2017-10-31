@@ -24,32 +24,32 @@ Coming soon™
 
 ## 🚀 Commands
 
-#### `dodgem help`
+### `help`
 
-- Outputs detailed usage and help information.
+Display detailed usage and help information
 
-#### ``dodgem login``
+### `login`
 
-- Prompts you for your email address & password for Rocket League Garage. You can run this command again to update your login details.
+Set login credentials for Rocket League Garage
 
-  *Note: Your login details are encrypted and stored locally*
+*Note: Your login credentials are encrypted and stored locally*
 
-#### ``dodgem bump <target> <interval>``
+### ` bump <target> <interval>`
 
-- Begins bumping the `<target>` every `<interval>`.
+Start bumping the specified target every interval
 
-  - `<target>` - Which trades to bump
-      - `all` - Bumps all trades - Most effective when you have a variety of different trades
-      - `oldest` - Bumps only the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market
-  - `<interval>` - How many minutes to wait before bumping again
+- `<target>` - Which trades to bump - `all` or `oldest`
+    - `all` - Bumps all trades - Most effective when you have a variety of different trades
+    - `oldest` - Bumps only the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market
+- `<interval>` - How many minutes to wait before bumping again
 
 ###### Examples:
 
 ```sh
-# Bumps all trades every 15 minutes
+# Bump all trades every 15 minutes
 $ dodgem bump all 15
 
-# Bumps the oldest trade every 3 minutes
+# Bump the oldest trade every 3 minutes
 $ dodgem bump oldest 3
 ```
 
