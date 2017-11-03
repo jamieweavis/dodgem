@@ -219,7 +219,7 @@ dodgem
   // Bump
   .command('bump', 'Start bumping the specified target every interval')
   .argument('<target>', `Which trades to bump - ${chalk.blue('all')} or ${chalk.blue('oldest')}`, ['all', 'oldest'], 'all')
-  .argument('<interval>', 'How many minutes to wait before bumping again', /^\d*$/, 15)
+  .argument('<interval>', 'How many minutes to wait before bumping again', regex.interval, 15)
   .action((args, opts) => {
     boot(args, opts)
       .then(login)
