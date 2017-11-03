@@ -196,7 +196,7 @@ async function setLogin () {
         description: 'Password',
         hidden: true,
         replace: '*',
-        pattern: regex.nonWhiteSpace,
+        pattern: regex.password,
         message: 'Please enter a valid password',
         required: true
       }
