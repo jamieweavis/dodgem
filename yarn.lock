@@ -68,9 +68,9 @@ capitalize@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/capitalize/-/capitalize-1.0.0.tgz#dc802c580aee101929020d2ca14b4ca8a0ae44be"
 
-caporal@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/caporal/-/caporal-0.7.0.tgz#3beaaf816f9a5b34f267deb1f92f3e156a1be2f8"
+caporal@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/caporal/-/caporal-0.8.0.tgz#1ff65235bf2cd0d03495b6b40eba58e95c41c5ea"
   dependencies:
     bluebird "^3.4.7"
     chalk "^1.1.3"
@@ -92,9 +92,9 @@ chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.1.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.2.0.tgz#477b3bf2f9b8fd5ca9e429747e37f724ee7af240"
+chalk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
     ansi-styles "^3.1.0"
     escape-string-regexp "^1.0.5"
