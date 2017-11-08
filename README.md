@@ -1,3 +1,9 @@
+## ⚠️ Deprecated
+
+This project is deprecated as of 08/11/17 since Rocket League Garage implemented [reCAPTCHA](https://www.google.com/recaptcha/intro/) on the Edit Trade page to prevent bots like Dodgem.
+
+---
+
 # Dodgem
 
 > 🎪 Rocket League Garage trade bumping automation CLI bot
