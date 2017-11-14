@@ -131,6 +131,11 @@ async function bumpTrades ([page, args, opts, tradeUrls]) {
       await page.click("[href^='/trade/edit']")
       await page.waitForNavigation()
 
+      if (args.target === 'all') {
+        // Wait for bump cooldown between bumps
+        await delay(1000 * 10)
+      }
+
       // Save
       await page.click('.rlg-btn-process-trade')
       await page.waitForNavigation()
@@ -210,6 +215,16 @@ async function setLogin () {
     prefs.emailAddress = credentials.emailAddress
     prefs.password = credentials.password
   })
+}
+
+/**
+ * Async delay helper function
+ *
+ * @param {Number} timeout
+ * @returns {Promise}
+ */
+async function delay (timeout) {
+  return new Promise(resolve => { setTimeout(() => { resolve() }, timeout) })
 }
 
 dodgem
