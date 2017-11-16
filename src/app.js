@@ -25,15 +25,6 @@ let prefs = new Preferences('com.jamiestraw.dodgem')
  * @returns {Promise.<Array>}
  */
 async function boot (args, opts) {
-  console.log(chalk.magenta(`
-    ____            __
-   / __ \\____  ____/ /___ ____  ____ ___ 
-  / / / / __ \\/ __  / __ \`/ _ \\/ __ \`__ \\
- / /_/ / /_/ / /_/ / /_/ /  __/ / / / / /
-/_____/\\____/\\__,_/\\__, /\\___/_/ /_/ /_/ 
-                  /____/         ${chalk.yellow.italic(`v${pjson.version}`)}
-  `))
-
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
 
