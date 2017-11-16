@@ -137,7 +137,7 @@ async function bumpTrades ([page, args, opts, tradeUrls]) {
       }
 
       // Save
-      await page.click('.rlg-btn-process-trade')
+      await page.click('.rlg-btn-primary[type="submit"]')
       await page.waitForNavigation()
 
       const secondsElapsed = moment().diff(start, 'seconds')
