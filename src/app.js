@@ -2,7 +2,7 @@
 'use strict'
 
 // Project Dependencies
-const ora = require('ora')
+const Ora = require('ora')
 const chalk = require('chalk')
 const prompt = require('prompt')
 const moment = require('moment')
@@ -29,7 +29,7 @@ async function boot (args, opts) {
   const page = await browser.newPage()
 
   const target = args.target === 'oldest' ? 'the oldest trade' : 'all trades'
-  ora(`Dodgem will bump ${chalk.blue(target)} every ${chalk.blue(args.interval)} minutes`).info()
+  new Ora(`Bumping ${chalk.blue(target)} every ${chalk.blue(args.interval)} minutes`).info()
 
   return [page, args, opts]
 }
@@ -43,7 +43,13 @@ async function boot (args, opts) {
  * @returns {Promise.<Array>}
  */
 async function login ([page, args, opts]) {
-  const spinner = ora(`Logging in as: ${chalk.blue(prefs.emailAddress)}`).start()
+  // Spinner
+  const spinner = new Ora({
+    text: `Logging in as: ${chalk.blue(prefs.emailAddress)}`,
+    color: 'yellow'
+  }).start()
+
+  // Login page
   await page.goto('https://rocket-league.com/login')
 
   // Email Address
@@ -71,7 +77,10 @@ async function login ([page, args, opts]) {
  * @returns {Promise.<Array>}
  */
 async function scrapeTrades ([page, args, opts]) {
-  const spinner = ora('Finding active trades').start()
+  const spinner = new Ora({
+    text: 'Finding active trades',
+    color: 'yellow'
+  }).start()
 
   // Navigate to active trades
   await page.goto('https://rocket-league.com/trading')
@@ -105,10 +114,11 @@ async function bumpTrades ([page, args, opts, tradeUrls]) {
   for (let [index, tradeUrl] of tradeUrls.entries()) {
     const humanIndex = index + 1
     const start = moment()
-    const spinner = ora(args.target === 'oldest'
-      ? 'Bumping oldest active trade'
-      : `Bumping trade ${humanIndex}/${tradeUrls.length}`
-    ).start()
+
+    const spinner = new Ora({
+      text: args.target === 'oldest' ? 'Bumping oldest active trade' : `Bumping trade ${humanIndex}/${tradeUrls.length}`,
+      color: 'yellow'
+    }).start()
 
     try {
       // Navigate to trade
@@ -157,7 +167,7 @@ function scheduleBumpTrades ([page, args, opts]) {
   const minutes = args.interval
   const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
 
-  ora(`Dodgem will run again at: ${chalk.green(nextRunTs)}`).info()
+  new Ora(`Dodgem will run again at: ${chalk.green(nextRunTs)}`).info()
 
   setTimeout(() => {
     scrapeTrades([page, args, opts])
@@ -171,7 +181,7 @@ function scheduleBumpTrades ([page, args, opts]) {
  */
 async function setLogin () {
   console.log('')
-  ora('Please enter login credentials for Rocket League Garage').info()
+  new Ora('Please enter login credentials for Rocket League Garage').info()
 
   prompt.message = 'Rocket League Garage'
   prompt.delimiter = ' > '
@@ -196,7 +206,13 @@ async function setLogin () {
   }, (error, credentials) => {
     if (error) return console.log(chalk.red('\n\nLog in aborted'))
 
-    const spinner = ora(`Saving credentials for: ${chalk.blue(credentials.emailAddress)}`).start()
+    const spinner = new Ora({
+      text: `Saving credentials for: ${chalk.blue(credentials.emailAddress)}`,
+      color: 'yellow'
+    }).start()
+
+    // @TODO: Verify credentials
+
     spinner.succeed(`Credentials verified and saved for: ${chalk.blue(credentials.emailAddress)}`)
 
     prefs.emailAddress = credentials.emailAddress
