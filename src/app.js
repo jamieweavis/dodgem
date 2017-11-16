@@ -15,7 +15,7 @@ const pjson = require('../package.json')
 const regex = require('./regex')
 
 // Preferences
-let prefs = new Preferences('com.jamiestraw.dodgem')
+let preferences = new Preferences('com.jamiestraw.dodgem')
 
 /**
  * Initialize puppeteer & display splash screen
@@ -45,7 +45,7 @@ async function boot (args, opts) {
 async function login ([page, args, opts]) {
   // Spinner
   const spinner = new Ora({
-    text: `Logging in as: ${chalk.blue(prefs.emailAddress)}`,
+    text: `Logging in as: ${chalk.blue(preferences.emailAddress)}`,
     color: 'yellow'
   }).start()
 
@@ -54,17 +54,17 @@ async function login ([page, args, opts]) {
 
   // Email Address
   await page.focus('.rlg-form .rlg-input[type="email"]')
-  await page.type(prefs.emailAddress)
+  await page.type(preferences.emailAddress)
 
   // Password
   await page.focus('.rlg-form .rlg-input[type="password"]')
-  await page.type(prefs.password)
+  await page.type(preferences.password)
 
   // Submit
   await page.click('.rlg-form .rlg-btn-primary[type="submit"]')
   await page.waitForNavigation()
 
-  spinner.succeed(`Logged in as: ${chalk.blue(prefs.emailAddress)}`)
+  spinner.succeed(`Logged in as: ${chalk.blue(preferences.emailAddress)}`)
   return [page, args, opts]
 }
 
@@ -215,8 +215,8 @@ async function setLogin () {
 
     spinner.succeed(`Credentials verified and saved for: ${chalk.blue(credentials.emailAddress)}`)
 
-    prefs.emailAddress = credentials.emailAddress
-    prefs.password = credentials.password
+    preferences.emailAddress = credentials.emailAddress
+    preferences.password = credentials.password
   })
 }
 
