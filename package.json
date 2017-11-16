@@ -4,7 +4,7 @@
   "version": "0.2.10",
   "author": "Jamie Straw <me@jamiestraw.com>",
   "bin": {
-    "dodgem": "./index.js"
+    "dodgem": "/src/app.js"
   },
   "bugs": {
     "url": "https://github.com/jamiestraw/dodgem/issues"
@@ -34,7 +34,7 @@
     "trading"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "/src/app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jamiestraw/dodgem.git"

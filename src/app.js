@@ -12,7 +12,7 @@ const capitalize = require('capitalize')
 const Preferences = require('preferences')
 
 // Files
-const pjson = require('./package.json')
+const pjson = require('../package.json')
 const regex = require('./regex')
 
 // Convenience
