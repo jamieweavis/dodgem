@@ -8,15 +8,11 @@ const prompt = require('prompt')
 const moment = require('moment')
 const dodgem = require('caporal')
 const puppeteer = require('puppeteer')
-const capitalize = require('capitalize')
 const Preferences = require('preferences')
 
 // Files
 const pjson = require('../package.json')
 const regex = require('./regex')
-
-// Convenience
-const projectName = capitalize(pjson.name)
 
 // Preferences
 let prefs = new Preferences('com.jamiestraw.dodgem')
@@ -42,7 +38,7 @@ async function boot (args, opts) {
   const page = await browser.newPage()
 
   const target = args.target === 'oldest' ? 'the oldest trade' : 'all trades'
-  ora(`${projectName} will bump ${chalk.blue(target)} every ${chalk.blue(args.interval)} minutes`).info()
+  ora(`Dodgem will bump ${chalk.blue(target)} every ${chalk.blue(args.interval)} minutes`).info()
 
   return [page, args, opts]
 }
@@ -170,7 +166,7 @@ function scheduleBumpTrades ([page, args, opts]) {
   const minutes = args.interval
   const nextRunTs = moment().add(minutes, 'minutes').format('HH:mm:ss')
 
-  ora(`${projectName} will run again at: ${chalk.green(nextRunTs)}`).info()
+  ora(`Dodgem will run again at: ${chalk.green(nextRunTs)}`).info()
 
   setTimeout(() => {
     scrapeTrades([page, args, opts])
@@ -229,7 +225,7 @@ async function delay (timeout) {
 
 dodgem
   .version(pjson.version)
-  .help(`🎪  ${projectName} - ${pjson.description} - v${pjson.version}`)
+  .help(`🎪  Dodgem - ${pjson.description} - v${pjson.version}`)
 
   // Bump
   .command('bump', 'Start bumping the specified target every interval')
