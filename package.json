@@ -2,12 +2,12 @@
   "name": "dodgem",
   "description": "Rocket League Garage trade bumping automation CLI bot",
   "version": "0.2.12",
-  "author": "Jamie Straw <me@jamiestraw.com>",
+  "author": "Jamie Weavis <jamie.weavis@gmail.com>",
   "bin": {
     "dodgem": "src/app.js"
   },
   "bugs": {
-    "url": "https://github.com/jamiestraw/dodgem/issues"
+    "url": "https://github.com/jamieweavis/dodgem/issues"
   },
   "dependencies": {
     "caporal": "^0.8.0",
@@ -24,7 +24,7 @@
   "engines": {
     "node": ">=7.6.0"
   },
-  "homepage": "https://github.com/jamiestraw/dodgem#readme",
+  "homepage": "https://github.com/jamieweavis/dodgem#readme",
   "keywords": [
     "bot",
     "node",
@@ -39,7 +39,7 @@
   "main": "src/app.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jamiestraw/dodgem.git"
+    "url": "git+https://github.com/jamieweavis/dodgem.git"
   },
   "scripts": {
     "test": "standard"

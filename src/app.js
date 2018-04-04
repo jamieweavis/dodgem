@@ -9,7 +9,7 @@ const Preferences = require('preferences')
 
 const Dodgem = require('./Dodgem')
 const pjson = require('../package.json')
-const credentials = new Preferences('com.jamiestraw.dodgem')
+const credentials = new Preferences("com.jamieweavis.dodgem");
 
 /**
  * Start command
