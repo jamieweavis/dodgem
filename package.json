@@ -1,7 +1,7 @@
 {
   "name": "dodgem",
   "description": "Rocket League Garage trade bumping automation CLI bot",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "author": "Jamie Weavis <jamie.weavis@gmail.com>",
   "bin": {
     "dodgem": "src/app.js"
