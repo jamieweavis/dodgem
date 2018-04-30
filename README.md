@@ -1,4 +1,4 @@
-# Dodgem
+# dodgem
 
 > 🎪 Rocket League Garage trade bumping automation CLI bot
 
