@@ -20,43 +20,35 @@ $ npm install --global dodgem
 
 ## Screenshots
 
-<img src="screenshots/oldest.png" width="888">
-<img src="screenshots/all.png" width="888">
+Coming soon.
 
-## Commands
+## Usage
 
-### `help`
+Dodgem is run globally from the command line with the `dodgem` command.
+
+### `dodgem --help`
 
 Display detailed usage and help information
 
-### `login`
+### `dodgem login`
 
 Set login credentials for Rocket League Garage
 
 _Note: Your login credentials are encrypted and stored locally_
 
-### `bump <target> <interval>`
+### `dodgem start`
 
-Start bumping the specified target every interval
+Begin the bumping process - you will be prompted for a target and an interval.
 
-* `<target>` - Which trades to bump - `all` or `oldest`
-  * `all` - Bumps all trades - Most effective when you have a variety of different trades
-  * `oldest` - Bumps only the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market
-* `<interval>` - How many minutes to wait before bumping again
+Target can be all of your trades _or_ your oldest trade.
 
-###### Examples:
+All trades is most effective when you have a variety of different active trades - this will bump _all_ of your trades one by one every interval. Oldest trade is most effective when you have lots of duplicate trades and you want to saturate the market - this will bump only your _oldest_ trade every interval.
 
-```sh
-# Bump all trades every 15 minutes
-$ dodgem bump all 15
-
-# Bump the oldest trade every 3 minutes
-$ dodgem bump oldest 3
-```
+Interval is the amount of time to wait between bumping. It is recommended to have _atleast_ a 15 minute interval when bumping all trades to prevent bumping too frequently and hitting the 15 minute cooldown timer. When bumping the oldest trade it is recommended to use the following calculation (rounded up) `15 / amountOfTrades = interval`.
 
 ## Related
 
-[Prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
+* [prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
 
 ## License
 
