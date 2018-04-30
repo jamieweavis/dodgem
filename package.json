@@ -19,7 +19,11 @@
     "puppeteer": "^0.10.2"
   },
   "devDependencies": {
-    "standard": "^10.0.3"
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
+    "prettier": "^1.12.1"
   },
   "engines": {
     "node": ">=7.6.0"
@@ -42,6 +46,6 @@
     "url": "git+https://github.com/jamieweavis/dodgem.git"
   },
   "scripts": {
-    "test": "standard"
+    "lint": "eslint ."
   }
 }
