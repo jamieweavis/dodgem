@@ -2,28 +2,28 @@
 
 > 🎪 Rocket League Garage trade bumping automation CLI bot
 
-![node-version](https://img.shields.io/node/v/dodgem.svg) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard) [![npm-downloads](https://img.shields.io/npm/dt/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![npm-version](https://img.shields.io/npm/v/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![license](https://img.shields.io/github/license/jamieweavis/dodgem.svg)](LICENSE.md)
+![node-version](https://img.shields.io/node/v/dodgem.svg) [![npm-downloads](https://img.shields.io/npm/dt/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![npm-version](https://img.shields.io/npm/v/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jamieweavis/contribution/master/LICENSE.md) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-## 📦 Install
+## Installation
 
 **The minimum version of Node.js required to run Dodgem is `7.6.0`** - ensure that this version (or higher) is installed before installing Dodgem. To check which version of Node.js you have installed you can run: `node -v`.
 
 Dodgem is installed globally via the command line from the npm registry with either [yarn](https://github.com/yarnpkg/yarn) or [npm](https://github.com/npm/npm).
 
 ```sh
-# Via yarn (recommended)
+# Via yarn
 $ yarn global add dodgem
 
 # Via npm
 $ npm install --global dodgem
 ```
 
-## 🖥 Screenshots
+## Screenshots
 
 <img src="screenshots/oldest.png" width="888">
 <img src="screenshots/all.png" width="888">
 
-## 🚀 Commands
+## Commands
 
 ### `help`
 
@@ -33,16 +33,16 @@ Display detailed usage and help information
 
 Set login credentials for Rocket League Garage
 
-*Note: Your login credentials are encrypted and stored locally*
+_Note: Your login credentials are encrypted and stored locally_
 
-### ` bump <target> <interval>`
+### `bump <target> <interval>`
 
 Start bumping the specified target every interval
 
-- `<target>` - Which trades to bump - `all` or `oldest`
-    - `all` - Bumps all trades - Most effective when you have a variety of different trades
-    - `oldest` - Bumps only the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market
-- `<interval>` - How many minutes to wait before bumping again
+* `<target>` - Which trades to bump - `all` or `oldest`
+  * `all` - Bumps all trades - Most effective when you have a variety of different trades
+  * `oldest` - Bumps only the oldest trade - Most effective when you have lots of duplicate trades and you want to saturate the market
+* `<interval>` - How many minutes to wait before bumping again
 
 ###### Examples:
 
@@ -54,15 +54,15 @@ $ dodgem bump all 15
 $ dodgem bump oldest 3
 ```
 
-## 🔗 Related
+## Related
 
 [Prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) for details.
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 The author and any contributors associated with this project are not resposible for the consequences that may occur from the use of this tool.
 
