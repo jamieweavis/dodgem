@@ -2,7 +2,7 @@
 
 > 🎪 Rocket League Garage trade bumping automation CLI bot
 
-![node-version](https://img.shields.io/node/v/dodgem.svg) [![npm-downloads](https://img.shields.io/npm/dt/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![npm-version](https://img.shields.io/npm/v/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jamieweavis/contribution/master/LICENSE.md) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+![node-version](https://img.shields.io/node/v/dodgem.svg) [![npm-downloads](https://img.shields.io/npm/dt/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![npm-version](https://img.shields.io/npm/v/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jamieweavis/contribution/master/LICENSE.md) [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ## Installation
 
@@ -26,15 +26,17 @@ Coming soon.
 
 Dodgem is run globally from the command line with the `dodgem` command.
 
-### `dodgem --help`
+### `dodgem`
 
-Display detailed usage and help information
+Display help and usage information.
 
 ### `dodgem login`
 
-Set login credentials for Rocket League Garage
+Set login credentials for Rocket League Garage.
 
-_Note: Your login credentials are encrypted and stored locally_
+You will be prompted for your Rocket League Garage email address and password.
+
+**Note: Your login credentials are encrypted and stored locally**
 
 ### `dodgem start`
 
@@ -44,7 +46,7 @@ Target can be all of your trades _or_ your oldest trade.
 
 All trades is most effective when you have a variety of different active trades - this will bump _all_ of your trades one by one every interval. Oldest trade is most effective when you have lots of duplicate trades and you want to saturate the market - this will bump only your _oldest_ trade every interval.
 
-Interval is the amount of time to wait between bumping. It is recommended to have _atleast_ a 15 minute interval when bumping all trades to prevent bumping too frequently and hitting the 15 minute cooldown timer. When bumping the oldest trade it is recommended to use the following calculation (rounded up) `15 / amountOfTrades = interval`.
+Interval is the amount of time to wait between bumping. It is recommended to have _atleast_ a 15 minute interval when bumping all trades to prevent bumping too frequently and hitting the 15 minute cooldown timer. When bumping the oldest trade it is recommended to use the following calculation `(15 / amountOfTrades) = interval`.
 
 ## Related
 
@@ -58,4 +60,4 @@ This project is licensed under the MIT License - see [LICENSE.md](LICENSE.md) fo
 
 The author and any contributors associated with this project are not resposible for the consequences that may occur from the use of this tool.
 
-Users of this tool do so entirely at their own risk - abusing this tool could get you permanently banned from Rocket League Garage.
+Users of this tool do so entirely at their own risk - abusing this tool _could_ get you permanently banned from Rocket League Garage.
