@@ -18,7 +18,7 @@ class Dodgem {
   }
 
   async init() {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ ignoreHTTPSErrors: true });
     this.page = await browser.newPage();
     this.page.setViewport({ width: 1920, height: 1080 });
 
