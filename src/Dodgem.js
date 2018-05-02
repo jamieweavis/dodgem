@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const dayjs = require('dayjs');
 const ora = require('ora');
 const puppeteer = require('puppeteer');
@@ -12,9 +11,9 @@ class Dodgem {
    * @param {Object} credentials
    */
   constructor(target, interval, credentials) {
-    this.credentials = credentials;
-    this.interval = interval;
     this.target = target;
+    this.interval = interval;
+    this.credentials = credentials;
   }
 
   async init() {
@@ -30,7 +29,7 @@ class Dodgem {
     const { emailAddress, password } = this.credentials;
 
     const spinner = ora({
-      text: `Logging in as: ${chalk.blue(emailAddress)}`,
+      text: `Logging in as: ${emailAddress}`,
       color: 'yellow'
     }).start();
 
@@ -40,10 +39,10 @@ class Dodgem {
       await this.page.type('.rlg-form .rlg-input[type="password"]', password);
       await this.page.click('.rlg-form .rlg-btn-primary[type="submit"]');
       await this.page.waitForSelector('.rlg-header-main-welcome-user');
-      spinner.succeed(`Logged in as: ${chalk.blue(emailAddress)}`);
+      spinner.succeed(`Logged in as: ${emailAddress}`);
     } catch (error) {
-      spinner.fail(`Failed to login in as: ${chalk.blue(emailAddress)}`);
-      throw new Error(chalk.red('Run `dodgem login` to update login details.'));
+      spinner.fail(`Failed to login in as: ${emailAddress}`);
+      throw new Error('Run `dodgem login` to update login details.');
     }
   }
 
@@ -67,7 +66,7 @@ class Dodgem {
       return anchors.map(anchor => anchor.href);
     });
     const trades = tradeUrls.length === 1 ? 'trade' : 'trades';
-    spinner.succeed(`Found ${chalk.blue(tradeUrls.length)} active ${trades}`);
+    spinner.succeed(`Found ${tradeUrls.length} active ${trades}`);
 
     // TODO: Filter out trades that are not editable due to 15 minute cooldown period
 
@@ -134,7 +133,7 @@ class Dodgem {
       .add(this.interval, 'minutes')
       .format('HH:mm:ss');
 
-    ora(`Dodgem will run again at: ${chalk.green(nextRunTs)}`).info();
+    ora(`Dodgem will run again at: ${nextRunTs}`).info();
     await this.delay(1000 * 60 * this.interval);
 
     const tradeUrls = await this.scrapeTrades();
