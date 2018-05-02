@@ -2,8 +2,8 @@
 
 const app = require('caporal');
 const pjson = require('../package.json');
-const startCommand = require('./commands/startCommand');
-const loginCommand = require('./commands/loginCommand');
+const startCommand = require('./commands/start');
+const loginCommand = require('./commands/login');
 
 app
   // App data
