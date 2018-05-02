@@ -1,6 +1,6 @@
 const ora = require('ora');
 const chalk = require('chalk');
-const moment = require('moment');
+const dayjs = require('dayjs');
 const puppeteer = require('puppeteer');
 
 class Dodgem {
@@ -130,7 +130,7 @@ class Dodgem {
   }
 
   async delayBumpTrades() {
-    const nextRunTs = moment()
+    const nextRunTs = dayjs()
       .add(this.interval, 'minutes')
       .format('HH:mm:ss');
 
