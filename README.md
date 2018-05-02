@@ -6,7 +6,7 @@
 
 ## Installation
 
-**The minimum version of Node.js required to run Dodgem is `7.6.0`** - ensure that this version (or higher) is installed before installing Dodgem. To check which version of Node.js you have installed you can run: `node -v`.
+**The minimum version of Node.js required to run dodgem is `7.6.0`** - ensure that this version (or higher) is installed before installing dodgem. To check which version of Node.js you have installed you can run: `node -v`.
 
 Dodgem is installed globally via the command line from the npm registry with either [yarn](https://github.com/yarnpkg/yarn) or [npm](https://github.com/npm/npm).
 
