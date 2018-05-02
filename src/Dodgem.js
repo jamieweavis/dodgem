@@ -19,7 +19,6 @@ class Dodgem {
   async init() {
     const browser = await puppeteer.launch({ ignoreHTTPSErrors: true });
     this.page = await browser.newPage();
-    this.page.setViewport({ width: 1920, height: 1080 });
 
     const target = this.target === 'oldest' ? 'the oldest trade' : 'all trades';
     ora(`Bumping ${target} every ${this.interval} minutes`).info();
