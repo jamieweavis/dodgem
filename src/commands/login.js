@@ -1,6 +1,6 @@
-const ora = require('ora');
-const inquirer = require('inquirer');
 const Conf = require('conf');
+const inquirer = require('inquirer');
+const ora = require('ora');
 
 const config = new Conf();
 

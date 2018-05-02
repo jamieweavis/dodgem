@@ -1,6 +1,6 @@
-const ora = require('ora');
 const chalk = require('chalk');
 const dayjs = require('dayjs');
+const ora = require('ora');
 const puppeteer = require('puppeteer');
 
 class Dodgem {

@@ -1,7 +1,7 @@
-const ora = require('ora');
+const Conf = require('conf');
 const Dodgem = require('../Dodgem');
 const inquirer = require('inquirer');
-const Conf = require('conf');
+const ora = require('ora');
 
 const config = new Conf();
 
