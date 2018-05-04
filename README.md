@@ -36,8 +36,6 @@ Set login credentials for Rocket League Garage.
 
 You will be prompted for your Rocket League Garage email address and password.
 
-**Note: Your login credentials are encrypted and stored locally**
-
 ### `dodgem start`
 
 Begin the bumping process - you will be prompted for a target and an interval.
