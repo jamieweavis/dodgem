@@ -112,7 +112,8 @@ class Dodgem {
         );
         if (
           this.target === 'all' &&
-          (index !== 0 || humanIndex !== tradeUrls.length)
+          index !== 0 &&
+          humanIndex !== tradeUrls.length
         ) {
           const delaySpinner = ora({
             text: 'Waiting 3 second bump cooldown',
