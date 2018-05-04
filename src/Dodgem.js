@@ -15,7 +15,7 @@ class Dodgem {
     this.target = target;
     this.interval = interval;
     this.credentials = credentials;
-    this.nonHeadless = nonHeadless;
+    this.headless = !nonHeadless;
   }
 
   async init() {
