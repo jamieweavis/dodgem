@@ -42,8 +42,9 @@ class Dodgem {
       await this.page.goto('https://rocket-league.com/login');
       await this.page.type('.rlg-form .rlg-input[type="email"]', emailAddress);
       await this.page.type('.rlg-form .rlg-input[type="password"]', password);
-      await this.page.click('.rlg-form .rlg-btn-primary[type="submit"]');
-      await this.page.waitForSelector('.rlg-header-main-welcome-user');
+      await this.clickAndWaitForNavigation(
+        '.rlg-form .rlg-btn-primary[type="submit"]'
+      );
       spinner.succeed(`Logged in as: ${emailAddress}`);
     } catch (error) {
       spinner.fail(`Failed to login in as: ${emailAddress}`);
@@ -60,8 +61,7 @@ class Dodgem {
     // Navigate to active trades
     await this.page.goto('https://rocket-league.com/trading');
     await this.page.hover('.rlg-header-main-welcome-user');
-    await this.page.click('[href^="/trades"]');
-    await this.page.waitForSelector('.rlg-trade-display-container.is--user');
+    await this.clickAndWaitForNavigation('[href^="/trades"]');
 
     // Scrape trade URLs
     let tradeUrls = await this.page.evaluate(() => {
@@ -90,7 +90,7 @@ class Dodgem {
     /* eslint-disable */
     for (let [index, tradeUrl] of tradeUrls.entries()) {
       const humanIndex = index + 1;
-      const spinner = ora({
+      const bumpSpinner = ora({
         text:
           this.target === 'oldest'
             ? 'Bumping oldest active trade'
@@ -101,30 +101,28 @@ class Dodgem {
       try {
         // Navigate to trade
         await this.page.goto(tradeUrl);
-
         // Edit trade
-        await this.page.click('[href^="/trade/edit"]');
-        await this.page.waitForSelector('.rlg-btn-primary[type="submit"]');
-
-        // Wait to avoid "invalid item selection" error on RLG
-        await this.delay(10000);
-
+        await this.clickAndWaitForNavigation('[href^="/trade/edit"]');
         // Save trade
-        await this.page.click('.rlg-btn-primary[type="submit"]');
-        await this.page.waitForSelector('.rlg-site-popup.is--success.active');
-
-        if (this.target === 'all') {
-          // Wait for bump cooldown between bumps
-          await this.delay(1000 * 10);
-        }
-
-        spinner.succeed(
+        await this.clickAndWaitForNavigation('.rlg-btn-primary[type="submit"]');
+        bumpSpinner.succeed(
           this.target === 'oldest'
             ? 'Bumped oldest active trade'
             : `Bumped trade ${humanIndex}/${tradeUrls.length}`
         );
+        if (
+          this.target === 'all' &&
+          (index !== 0 || humanIndex !== tradeUrls.length)
+        ) {
+          const delaySpinner = ora({
+            text: 'Waiting 3 second bump cooldown',
+            spinner: 'dots4'
+          }).start();
+          await this.delay(1000 * 3);
+          delaySpinner.stop();
+        }
       } catch (error) {
-        spinner.fail(
+        bumpSpinner.fail(
           this.target === 'oldest'
             ? `Failed to bump oldest active trade`
             : `Failed to bump trade ${humanIndex}/${tradeUrls.length}`
@@ -147,13 +145,26 @@ class Dodgem {
   }
 
   /**
-   * Async delay helper function
+   * Asynchronous delay helper method
    *
    * @param {Number} timeout
    * @returns {Promise}
    */
   async delay(timeout) {
     return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
+  /**
+   * Click and wait for navigation helper method
+   *
+   * @link https://github.com/GoogleChrome/puppeteer/pull/1792/files
+   * @param {String} selector
+   */
+  async clickAndWaitForNavigation(selector) {
+    return Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click(selector)
+    ]);
   }
 }
 

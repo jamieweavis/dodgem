@@ -18,9 +18,9 @@ $ yarn global add dodgem
 $ npm install --global dodgem
 ```
 
-## Demo
+## Screenshot
 
-<p align='center'><img src='screencast.svg' alt='screencast demo'></p>
+<p align='center'><img src='screenshot.svg' alt='screenshot'></p>
 
 ## Usage
 
