@@ -28,13 +28,18 @@ const questions = [
 
 const name = 'start';
 const description = 'Start bumping for the stored account';
-const action = () => {
+const action = (args, options) => {
   if (!config.get('emailAddress') || !config.get('password')) {
     ora('Please set login credentials with `dodgem login`').fail();
     return;
   }
   inquirer.prompt(questions).then(async data => {
-    const dodgem = new Dodgem(data.target, data.interval, config.store);
+    const dodgem = new Dodgem(
+      data.target,
+      data.interval,
+      config.store,
+      options.nonHeadless
+    );
     await dodgem.init();
     await dodgem.login();
     const tradeUrls = await dodgem.scrapeTrades();

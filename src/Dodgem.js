@@ -4,21 +4,27 @@ const puppeteer = require('puppeteer');
 
 class Dodgem {
   /**
-   * Stores target, interval and credentials against the object.
+   * Stores target, interval, credentials & headless against the object.
    *
    * @param {String} target
    * @param {Number} interval
    * @param {Object} credentials
+   * @param {Boolean} nonHeadless
    */
-  constructor(target, interval, credentials) {
+  constructor(target, interval, credentials, nonHeadless) {
     this.target = target;
     this.interval = interval;
     this.credentials = credentials;
+    this.nonHeadless = nonHeadless;
   }
 
   async init() {
-    const browser = await puppeteer.launch({ ignoreHTTPSErrors: true });
+    const browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+      headless: this.headless
+    });
     this.page = await browser.newPage();
+    this.page.setViewport({ width: 1920, height: 1080 });
 
     const target = this.target === 'oldest' ? 'the oldest trade' : 'all trades';
     ora(`Bumping ${target} every ${this.interval} minutes`).info();
