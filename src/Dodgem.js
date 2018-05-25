@@ -40,6 +40,7 @@ class Dodgem {
 
     try {
       await this.page.goto('https://rocket-league.com/login');
+      await this.clickAndWaitForNavigation('#acceptPrivacyPolicy');
       await this.page.type('.rlg-form .rlg-input[type="email"]', emailAddress);
       await this.page.type('.rlg-form .rlg-input[type="password"]', password);
       await this.clickAndWaitForNavigation(
