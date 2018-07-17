@@ -1,8 +1,13 @@
-# dodgem
-
-> 🎪 Rocket League Garage trade bumping automation CLI bot
-
-![node-version](https://img.shields.io/node/v/dodgem.svg) [![npm-downloads](https://img.shields.io/npm/dt/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![npm-version](https://img.shields.io/npm/v/dodgem.svg)](https://www.npmjs.com/package/dodgem) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/jamieweavis/contribution/master/LICENSE.md) [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+<p align="center"><img src="screenshot.svg" alt="Screenshot"></p>
+<h3 align="center">Dodgem</h3>
+<p align="center">🎪 Rocket League Garage trade bumping automation CLI bot</p>
+<p align="center">
+	<img src="https://img.shields.io/node/v/dodgem.svg" alt="Minimum Node Version">
+    <a href="https://www.npmjs.com/package/dodgem"><img src="https://img.shields.io/npm/dt/dodgem.svg" alt="npm Downloads"></a>
+    <a href="https://www.npmjs.com/package/dodgem"><img src="https://img.shields.io/npm/v/dodgem.svg" alt="npm Version"></a>
+    <a href="https://github.com/jamieweavis/dodgem/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
+    <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" alt="Code Style Prettier"></a>
+</p>
 
 ## Installation
 
@@ -17,10 +22,6 @@ $ yarn global add dodgem
 # Via npm
 $ npm install --global dodgem
 ```
-
-## Screenshot
-
-<p align='center'><img src='screenshot.svg' alt='screenshot'></p>
 
 ## Usage
 
