@@ -64,7 +64,7 @@ Number or decimal of how many minutes to wait between bumps.
 
 ## Related
 
-* [prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
+* [Prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
 
 ## License
 
