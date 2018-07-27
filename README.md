@@ -47,6 +47,21 @@ All trades is most effective when you have a variety of different active trades 
 
 Interval is the amount of time to wait between bumping. It is recommended to have _atleast_ a 15 minute interval when bumping all trades to prevent bumping too frequently and hitting the 15 minute cooldown timer. When bumping the oldest trade it is recommended to use the following calculation `(15 / amountOfTrades) = interval`.
 
+### `dodgem bump <target> <interval>`
+
+Begin the bumping process but without a prompt for target & interval.
+
+Intended for more advanced users or users who are running multiple instances of Dodgem via `.bat` file for example.
+
+#### `target`
+
+- `all` - For all of your trades
+- `oldest` - For only your oldest trade
+
+#### `interval`
+
+Number or decimal of how many minutes to wait between bumps.
+
 ## Related
 
 * [prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool

@@ -27,7 +27,7 @@ const questions = [
 ];
 
 const name = 'start';
-const description = 'Start bumping for the stored account';
+const description = 'Start bumping';
 const action = (args, options) => {
   if (!config.get('emailAddress') || !config.get('password')) {
     ora('Please set login credentials with `dodgem login`').fail();
