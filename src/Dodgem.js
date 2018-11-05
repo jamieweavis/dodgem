@@ -105,7 +105,7 @@ class Dodgem {
         // Edit trade
         await this.clickAndWaitForNavigation('[href^="/trade/edit"]');
         // Save trade
-        await this.clickAndWaitForNavigation('.rlg-btn-primary[type="submit"]');
+        await this.clickAndWaitForNavigation('.rlg-btn-trade-form.g-recaptcha.rlg-btn-primary.prevent');
         bumpSpinner.succeed(
           this.target === 'oldest'
             ? 'Bumped oldest active trade'
