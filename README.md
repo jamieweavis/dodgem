@@ -1,3 +1,9 @@
+## Archived
+
+As of the 6th of November 2018 Rocket League Garage have implemented reCAPTCHA bot protection - this means that Dodgem will no longer work therefore future development will discontinue and this repository will be archived. Thanks for using Dodgem!
+
+---
+
 <p align="center"><img src="screenshot.svg" alt="Screenshot"></p>
 <h3 align="center">Dodgem</h3>
 <p align="center">🎪 Rocket League Garage trade bumping automation CLI bot</p>
