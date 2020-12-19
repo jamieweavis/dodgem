@@ -1,6 +1,8 @@
-## Archived
+## UPDATE — 2020-12-19
 
-As of the 6th of November 2018 Rocket League Garage have implemented reCAPTCHA bot protection - this means that Dodgem will no longer work therefore future development will discontinue and this repository will be archived. Thanks for using Dodgem!
+**This bot is no longer necessary because Rocket League Garage have added the `Bump` button to the trades page - to automate bumping trades via the new method, use the new Chrome extension:**
+
+**[https://github.com/jamieweavis/rocket-league-garage-trade-bumper](https://github.com/jamieweavis/rocket-league-garage-trade-bumper)**
 
 ---
 
