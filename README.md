@@ -72,6 +72,7 @@ Number or decimal of how many minutes to wait between bumps.
 
 ## Related
 
+- [rocket-league-garage-trade-bumper](https://github.com/jamieweavis/rocket-league-garage-trade-bumper) - 🚘 Automatic trade bumping extension for Rocket League Garage (https://rocket-league.com/)
 * [Prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
 
 ## License
