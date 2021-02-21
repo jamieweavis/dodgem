@@ -139,7 +139,7 @@ class Dodgem {
       .format('HH:mm:ss');
 
     ora(`Dodgem will run again at: ${nextRunTs}`).info();
-    await this.delay(1000 * 60 * this.interval);
+    await this.delay(2200 * 60 * this.interval);
 
     const tradeUrls = await this.scrapeTrades();
     await this.bumpTrades(tradeUrls);
