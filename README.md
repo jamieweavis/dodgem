@@ -1,11 +1,3 @@
-## UPDATE — 2020-12-19
-
-**This bot is no longer necessary because Rocket League Garage have added the `Bump` button to the trades page - to automate bumping trades via the new method, use the new Chrome extension:**
-
-**[https://github.com/jamieweavis/rocket-league-garage-trade-bumper](https://github.com/jamieweavis/rocket-league-garage-trade-bumper)**
-
----
-
 <p align="center"><img src="screenshot.svg" alt="Screenshot"></p>
 <h3 align="center">Dodgem</h3>
 <p align="center">🎪 Rocket League Garage trade bumping automation CLI bot</p>
@@ -72,7 +64,6 @@ Number or decimal of how many minutes to wait between bumps.
 
 ## Related
 
-- [rocket-league-garage-trade-bumper](https://github.com/jamieweavis/rocket-league-garage-trade-bumper) - 🚘 Automatic trade bumping extension for Rocket League Garage (https://rocket-league.com/)
 * [Prosper](https://github.com/jamieweavis/prosper) - 💎 Rocket League Garage trade aggregation & reporting CLI tool
 
 ## License
